@@ -117,54 +117,11 @@ public class ShooterPanel extends SurfaceView implements SurfaceHolder.Callback 
             return true;
         }
 
-        if(event.getAction()==MotionEvent.ACTION_MOVE)
-        {
-            missileplayer = true;
-        }
-
-        if (event.getAction()==MotionEvent.ACTION_HOVER_MOVE)
-        {
-            missileplayer = false;
-        }
-
         if(event.getAction()==MotionEvent.ACTION_UP)
         {
             player.setUp(false);
             return true;
         }
-
-        /*if(event.getAction()==MotionEvent.ACTION_POINTER_DOWN)
-        {
-            mplayer.add(new MissilePlayer(BitmapFactory.decodeResource(getResources(),R.drawable.missile_player),
-                    player.getX(), player.getY(),30,100, player.getScore(),4));
-
-            for (MissilePlayer mplaye: mplayer){
-                mplaye.update();
-            }
-
-            for (Ennemi ennemi: ennemis){
-
-                //loop through every missile and check cqollision and remove
-                for(int i = 0; i<mplayer.size();i++)
-                {
-                    //update missile
-                    mplayer.get(i).update();
-
-                    if(collision(mplayer.get(i),ennemi))
-                    {
-                        ennemis.remove(i);
-                        break;
-                    }
-                    //remove missile if it is way off the screen
-                    if(mplayer.get(i).getX()>500)
-                    {
-                        mplayer.remove(i);
-                        break;
-                    }
-                }
-            }
-
-        }*/
 
         return super.onTouchEvent(event);
     }
@@ -195,22 +152,6 @@ public class ShooterPanel extends SurfaceView implements SurfaceHolder.Callback 
 
             if(missileElapsed >((int)(rand.nextDouble()+ 2000 - player.getScore()))){
 
-                /**for(int i = 0; i<ennemis.size();i++)
-                {
-                    //update ennemis
-                    ennemis.get(i).update();
-
-                    //remove ennemi if it is way off the screen
-                    if(ennemis.get(i).getX()> 100 + (int)(rand.nextDouble()))
-                    {
-                        ennemis.remove(i);
-                        break;
-                    }
-                }*/
-
-
-
-
                 for (Ennemi ennemi: ennemis){
 
                     if(ennemi.getX() > 100 + (int)(rand.nextDouble() )){
@@ -225,35 +166,6 @@ public class ShooterPanel extends SurfaceView implements SurfaceHolder.Callback 
 
                 //reset missile timer
                 missileStartTime = System.nanoTime();
-            }
-
-            // missile player
-            if (missileplayer)
-            {
-                mplayer.add(new MissilePlayer(BitmapFactory.decodeResource(getResources(),R.drawable.missile_player),
-                        player.getX(), player.getY(),30,25, player.getScore(),4));
-            }
-
-            for (Ennemi ennemi: ennemis){
-
-                //loop through every missile and check cqollision and remove
-                for(int i = 0; i<mplayer.size();i++)
-                {
-                    //update missile
-                    mplayer.get(i).update();
-
-                    if(collision(mplayer.get(i),ennemi))
-                    {
-                        ennemis.remove(i);
-                        break;
-                    }
-                    //remove missile if it is way off the screen
-                    if(mplayer.get(i).getX()>500)
-                    {
-                        mplayer.remove(i);
-                        break;
-                    }
-                }
             }
 
             //loop through every ennemis and check collision and remove
@@ -318,7 +230,6 @@ public class ShooterPanel extends SurfaceView implements SurfaceHolder.Callback 
                 newGame();
             }
 
-
         }
     }
     public boolean collision(GameObject a, GameObject b)
@@ -348,11 +259,6 @@ public class ShooterPanel extends SurfaceView implements SurfaceHolder.Callback 
             //draw ennemis
             for (Ennemi e : ennemis) {
                 e.draw(canvas);
-            }
-
-            //draw missile player
-            for (MissilePlayer mp : mplayer) {
-                mp.draw(canvas);
             }
 
             //draw ennemis
@@ -396,21 +302,18 @@ public class ShooterPanel extends SurfaceView implements SurfaceHolder.Callback 
     {
         Paint paint = new Paint();
         paint.setColor(Color.BLACK);
-        paint.setTextSize(30);
+        paint.setTextSize(15);
         paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
         canvas.drawText("DISTANCE: " + (player.getScore()*3), 10, HEIGHT - 10, paint);
-        canvas.drawText("BEST: " + best, WIDTH - 215, HEIGHT - 10, paint);
+        canvas.drawText("BEST: " + best, WIDTH - 150, HEIGHT - 10, paint);
 
         if(!player.getPlaying()&&newGameCreated&&reset)
         {
             Paint paint1 = new Paint();
-            paint1.setTextSize(40);
+            paint1.setTextSize(25);
             paint1.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-            canvas.drawText("PRESS TO START", WIDTH/2-50, HEIGHT/2, paint1);
+            canvas.drawText("Appuyer pour commencer", WIDTH/2-100, HEIGHT/2, paint1);
 
-            paint1.setTextSize(20);
-            canvas.drawText("PRESS AND HOLD TO GO UP", WIDTH/2-50, HEIGHT/2 + 20, paint1);
-            canvas.drawText("RELEASE TO GO DOWN", WIDTH/2-50, HEIGHT/2 + 40, paint1);
         }
     }
 
